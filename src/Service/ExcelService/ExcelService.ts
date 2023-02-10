@@ -39,7 +39,7 @@ class Excel {
     return rows;
   }
 
-  async getExcel(url: string) {
+  async getExcel(url: string): Promise<string> {
     const { data } = await axios.get(url, {
       responseType: "arraybuffer",
     });
@@ -52,7 +52,7 @@ class Excel {
       this.nameToScheduleFile
     );
 
-    fs.writeFileSync(excelPath, data);
+    await fs.writeFileSync(excelPath, data);
 
     return excelPath;
   }

@@ -13,6 +13,7 @@ export function ColumnHelper<T>(column: T[]): IColumnHelper<T> {
   // С седьмого элемента массива начинается перечисление пар
   let count = 7;
 
+  // Пробегаемся по дням
   for (let i = 0; i < 6; i++) {
     const day: IDay = {
       name: EDays[i],
@@ -21,15 +22,27 @@ export function ColumnHelper<T>(column: T[]): IColumnHelper<T> {
 
     const chunk = column.slice(count, (count += 8));
 
+    let isRenderMissingPairs = true;
+
+    // Пробегаемся по парам на день
     for (let j = 0; j < chunk.length; j++) {
       const pair = chunk[j];
 
-      if (pair === undefined) {
+      const isNoPair = pair === undefined;
+      const isAddMiss = isRenderMissingPairs && isNoPair;
+
+      if (isAddMiss) {
         day.schedule = [...day.schedule, `${j + 1}. Нет`];
         continue;
       }
 
-      day.schedule = [...day.schedule, `${j + 1}. ${pair}`];
+      if (isRenderMissingPairs) {
+        isRenderMissingPairs = false;
+      }
+
+      if (!isNoPair) {
+        day.schedule = [...day.schedule, `${j + 1}. ${pair}`];
+      }
     }
 
     res.info.push(day);

@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"target": "ES2016",
 		"module": "commonjs",
+		"outDir": "bot",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,

@@ -1,24 +1,32 @@
-import { ScheduleMessageHelper } from "../../Helpers/ScheduleMessageHelper/ScheduleMessageHelper";
 import {
-  TelegramApi,
-  Message,
-  startKeyboard,
+  ScheduleMessageHelper,
   scheduleKeyboard,
   ExcelController,
+  GroupNameHelper,
+  startKeyboard,
   ColumnHelper,
+  TelegramApi,
+  Commands,
+  Message,
+  Сourses,
+  Stickers,
 } from "./index";
 
 class BotResponse {
   async start(bot: TelegramApi, msg: Message) {
     const chatId = msg.chat.id;
+    const userName = msg.from?.first_name;
 
-    const sticker =
-      "https://cdn.tlgrm.app/stickers/065/642/065642f8-a0e9-4d2e-bb64-185f4d1c445d/192/4.webp";
+    const sticker = Stickers.сute;
 
-    const message = "Привет";
+    const message = `Привет, ${userName} 👋\n\nС помощью данного бота ты можешь быстро и комфортно просматривать расписание занятий 015-й группы.\n\nЧтобы посмотреть расписание\nнажми на кнопку "${Commands.getSchedule}"\n\nИсходный код бота можно посмотреть <a href="https://github.com/ManucherKM/schedule_bot">тут</a>`;
 
     await bot.sendSticker(chatId, sticker);
-    await bot.sendMessage(chatId, message, startKeyboard);
+    await bot.sendMessage(chatId, message, {
+      ...startKeyboard,
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+    });
   }
 
   async getSchedule(bot: TelegramApi, msg: Message) {
@@ -45,9 +53,12 @@ class BotResponse {
       throw new Error("Неверный путь до файла журнала");
     }
 
+    const group = GroupNameHelper("015");
+    const course = Сourses.third;
+
     const search = {
-      course: "3 курс",
-      group: "15",
+      course,
+      group,
     };
 
     const content = await ExcelController.getColumn(
@@ -73,25 +84,6 @@ class BotResponse {
 
     let messageSchedule = ScheduleMessageHelper(formatContent);
 
-    // for (let i = 0; i < formatContent.info.length; i++) {
-    //   const dayInfo = formatContent.info[i];
-
-    //   let day = `\n\n<b>${dayInfo.name}</b>`;
-
-    //   if (dayInfo.schedule.length === 0) {
-    //     day += "\nНа этот день пар нет.";
-    //     messageSchedule += day;
-
-    //     continue;
-    //   }
-
-    //   for (const pair of dayInfo.schedule) {
-    //     day += `\n${pair}`;
-    //   }
-
-    //   messageSchedule += day;
-    // }
-
     await bot.sendMessage(chatId, messageSchedule, {
       ...scheduleKeyboard,
       parse_mode: "HTML",
@@ -106,8 +98,11 @@ class BotResponse {
 
   async error(bot: TelegramApi, msg: Message) {
     const chatId = msg.chat.id;
+
+    const sticker = Stickers.panic;
     const message = "Что-то пошло не так...";
 
+    await bot.sendSticker(chatId, sticker);
     await bot.sendMessage(chatId, message, startKeyboard);
   }
 

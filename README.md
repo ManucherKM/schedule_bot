@@ -63,4 +63,4 @@ npm run start
 
 ## Preview
 
-![Layout]()
+![Layout](https://github.com/ManucherKM/schedule_bot/blob/main/preview/preview.png?raw=true)

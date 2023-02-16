@@ -3,6 +3,8 @@
 ## Tools
 
 ![Node.js](https://img.shields.io/badge/-Node.js-000?style=for-the-badge&logo=Nodedotjs&logoColor=448940)
+![TypeScript](https://img.shields.io/badge/-TypeScript-000?style=for-the-badge&logo=TypeScript&logoColor=3177c6)
+![Axios](https://img.shields.io/badge/-Axios-000?style=for-the-badge&logo=Axios&logoColor=5733C2)
 ![TelegramAPI](https://img.shields.io/badge/-Telegram_API-000?style=for-the-badge&logo=telegram&logoColor=31AADE)
 
 ## Run the bot in development mode (TypeScript)
@@ -17,11 +19,10 @@ npm install
 
 - Add the `.env' file to the bot's folder.
 
-- In the .env file add 2 variables `TOKEN` and `URL_SCHEDULE`:
+- Add the variable `TOKEN` to the .env file:
 
 ```env
-TOKEN=YOUR TOKEN
-URL_SCHEDULE=UrlLinkToScheduleFile
+TOKEN=YOUR_TOKEN
 ```
 
 - Run the bot with the command `npm run dev`.
@@ -42,11 +43,10 @@ npm install
 
 - Add the `.env' file to the bot's folder.
 
-- In the .env file add 2 variables `TOKEN` and `URL_SCHEDULE`:
+- Add the variable `TOKEN` to the .env file:
 
 ```env
-TOKEN=YOUR TOKEN
-URL_SCHEDULE=UrlLinkToScheduleFile
+TOKEN=YOUR_TOKEN
 ```
 
 - Build the bot with the command `npm run build`.

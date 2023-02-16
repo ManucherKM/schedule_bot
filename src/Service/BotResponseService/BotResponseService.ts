@@ -1,5 +1,6 @@
 import {
   ScheduleMessageHelper,
+  ScheduleUrlController,
   scheduleKeyboard,
   ExcelController,
   GroupNameHelper,
@@ -43,7 +44,7 @@ class BotResponse {
       messages.loading_request
     );
 
-    const urlToFileSchedule = process.env.URL_SCHEDULE;
+    const urlToFileSchedule = await ScheduleUrlController.getUrl();
 
     const pathToFileSchedule = await ExcelController.getExcel(
       urlToFileSchedule
@@ -89,11 +90,11 @@ class BotResponse {
       parse_mode: "HTML",
     });
 
-    const isFileRemoved = await ExcelController.removeExcel(pathToFileSchedule);
+    // const isFileRemoved = await ExcelController.removeExcel(pathToFileSchedule);
 
-    if (!isFileRemoved) {
-      console.log("Не удалось удалить файл с журналом");
-    }
+    // if (!isFileRemoved) {
+    //   console.log("Не удалось удалить файл с журналом");
+    // }
   }
 
   async error(bot: TelegramApi, msg: Message) {

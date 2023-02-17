@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node ./bot/index.js",
     "dev": "nodemon ./src/index.ts",
-    "build": "tsc"
+    "build": "npx tsc",
+    "prettier": "npx prettier --write src/",
+    "prettier:check": "npx prettier --check src/"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/node-telegram-bot-api": "^0.57.6",
     "nodemon": "^2.0.20",
+    "prettier": "2.8.4",  
     "ts-node": "^10.9.1"
   }
 }

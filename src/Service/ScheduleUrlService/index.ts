@@ -1,4 +1,4 @@
-import axios from "axios";
-import { parse } from 'node-html-parser';
+import axios from 'axios'
+import { parse } from 'node-html-parser'
 
-export { axios, parse };
+export { axios, parse }

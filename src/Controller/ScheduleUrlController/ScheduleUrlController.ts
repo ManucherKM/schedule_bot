@@ -1,19 +1,19 @@
-import { ScheduleUrlService } from ".";
+import { ScheduleUrlService } from '.'
 
 class ScheduleUrl {
-  async getUrl(): Promise<string | undefined> {
-    try {
-      const res = await ScheduleUrlService.getUrl();
+	async getUrl(): Promise<string | undefined> {
+		try {
+			const res = await ScheduleUrlService.getUrl()
 
-      if (!res) {
-        return;
-      }
+			if (!res) {
+				return
+			}
 
-      return res;
-    } catch (e) {
-      console.log(e);
-    }
-  }
+			return res
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
-export const ScheduleUrlController = new ScheduleUrl();
+export const ScheduleUrlController = new ScheduleUrl()

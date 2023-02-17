@@ -1,8 +1,8 @@
 // Модули
-import { ExcelService } from "../../Service/ExcelService/ExcelService";
+import { ExcelService } from '../../Service/ExcelService/ExcelService'
 
 //Типы
-import { CellValue } from "../../Types/types";
+import { CellValue } from '../../Types/types'
 
 // Экспорт
-export { ExcelService, CellValue };
+export { ExcelService, CellValue }

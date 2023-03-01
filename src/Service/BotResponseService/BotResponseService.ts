@@ -1,6 +1,7 @@
 import {
 	ScheduleMessageHelper,
 	ScheduleUrlController,
+	IGetScheduleInfo,
 	scheduleKeyboard,
 	ExcelController,
 	GroupNameHelper,
@@ -14,6 +15,8 @@ import {
 } from './index'
 
 class BotResponse {
+	private getScheduleInfo = { urlToSchedule: '' } as IGetScheduleInfo
+
 	async start(bot: TelegramApi, msg: Message) {
 		const chatId = msg.chat.id
 		const userName = msg.from?.first_name
@@ -41,12 +44,31 @@ class BotResponse {
 
 		const { message_id } = await bot.sendMessage(
 			chatId,
-			messages.loading_request,
+			messages.loading_request
 		)
 
 		const urlToFileSchedule = await ScheduleUrlController.getUrl()
 
-		const pathToFileSchedule = await ExcelController.getExcel(urlToFileSchedule)
+		const isSimilarUrls =
+			this.getScheduleInfo.urlToSchedule === urlToFileSchedule
+
+		const isStringUrl = urlToFileSchedule !== undefined
+
+		//При первом запуске бота вседа скачиваем Excel файл
+		if (!this.getScheduleInfo.urlToSchedule && isStringUrl) {
+			this.getScheduleInfo.urlToSchedule = urlToFileSchedule
+			var pathToFileSchedule = await ExcelController.getExcel(urlToFileSchedule)
+		}
+
+		// При повторных запросах проверяем был ли у нас уже такой файл с журналом
+		else if (isSimilarUrls) {
+			this.getScheduleInfo.urlToSchedule = urlToFileSchedule
+			var pathToFileSchedule = await ExcelController.getPathToSchedule()
+		}
+		// Если такого файла не было - заменяем предыдущий файл на новый
+		else {
+			var pathToFileSchedule = await ExcelController.getExcel(urlToFileSchedule)
+		}
 
 		if (!pathToFileSchedule) {
 			throw new Error('Неверный путь до файла журнала')
@@ -65,7 +87,7 @@ class BotResponse {
 		const content = await ExcelController.getColumn(
 			pathToFileSchedule,
 			search.course,
-			search.group,
+			search.group
 		)
 
 		await bot.editMessageText(messages.response_formation, {

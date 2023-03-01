@@ -2,6 +2,7 @@ import { ExcelJS, axios, fs, path } from './index'
 
 class Excel {
 	private nameToScheduleFile: string = 'Schedule.xlsx'
+	private pathToScheduleFile: string = ''
 
 	async getColumn(path: string, course: string, columnId: string) {
 		const workbook = new ExcelJS.Workbook()
@@ -49,8 +50,10 @@ class Excel {
 			'..',
 			'..',
 			'Files',
-			this.nameToScheduleFile,
+			this.nameToScheduleFile
 		)
+
+		this.pathToScheduleFile = excelPath
 
 		await fs.writeFileSync(excelPath, data)
 
@@ -65,6 +68,10 @@ class Excel {
 		})
 
 		return true
+	}
+
+	getPathToSchedule(): string {
+		return this.pathToScheduleFile
 	}
 }
 

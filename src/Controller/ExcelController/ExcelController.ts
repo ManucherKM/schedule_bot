@@ -4,7 +4,7 @@ class Excel {
 	async getColumn(
 		path: string | undefined,
 		course: string | undefined,
-		columnId: string | undefined,
+		columnId: string | undefined
 	): Promise<CellValue[]> {
 		try {
 			if (!course || !columnId || !path) {
@@ -60,6 +60,16 @@ class Excel {
 			console.log(e)
 			return false
 		}
+	}
+
+	getPathToSchedule(): string | false {
+		const res: string = ExcelService.getPathToSchedule()
+
+		if (!res) {
+			return false
+		}
+
+		return res
 	}
 }
 

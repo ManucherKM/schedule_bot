@@ -10,13 +10,19 @@ import { Stickers } from '../../Config/enums'
 import { Сourses } from '../../Config/enums'
 
 //Типы
-import { SendMessageOptions, TelegramApi, Message } from '../../Types/types'
+import {
+	SendMessageOptions,
+	IGetScheduleInfo,
+	TelegramApi,
+	Message,
+} from '../../Types/types'
 
 // Экспорт
 export {
 	ScheduleMessageHelper,
 	ScheduleUrlController,
 	SendMessageOptions,
+	IGetScheduleInfo,
 	scheduleKeyboard,
 	ExcelController,
 	GroupNameHelper,

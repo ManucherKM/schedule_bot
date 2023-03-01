@@ -14,11 +14,29 @@ interface IColumnHelper<T> {
 	info: IDay[]
 }
 
+interface IGetScheduleInfo {
+	urlToSchedule: string
+}
+
+interface IUser {
+	name: string
+	tg_id: string
+	chat_id: number
+}
+
+interface IBot {
+	name: string
+	quantity: number
+}
+
 export {
 	SendMessageOptions,
+	IGetScheduleInfo,
 	IColumnHelper,
 	TelegramApi,
 	CellValue,
 	Message,
+	IUser,
+	IBot,
 	IDay,
 }

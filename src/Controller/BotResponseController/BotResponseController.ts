@@ -1,4 +1,4 @@
-import { BotResponseService, Message, TelegramApi } from './index'
+import { BotResponseService, Message, TelegramApi } from '.'
 
 class BotResponse {
 	async start(bot: TelegramApi, msg: Message) {
@@ -42,20 +42,6 @@ class BotResponse {
 		}
 	}
 
-	async profile(bot: TelegramApi, msg: Message) {
-		try {
-			if (!bot || !msg) {
-				console.log('Не найден бот или сообщение')
-				return
-			}
-
-			await BotResponseService.profile(bot, msg)
-		} catch (e) {
-			console.log(e)
-			await this.error(bot, msg)
-		}
-	}
-
 	async notFound(bot: TelegramApi, msg: Message) {
 		try {
 			if (!bot || !msg) {
@@ -83,6 +69,46 @@ class BotResponse {
 			await this.error(bot, msg)
 		}
 	}
+
+	async getStatistics(bot: TelegramApi, msg: Message) {
+		try {
+			if (!bot || !msg) {
+				console.log('Не найден бот или сообщение')
+				return
+			}
+
+			await BotResponseService.getStatistics(bot, msg)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getInfo(bot: TelegramApi, msg: Message) {
+		try {
+			if (!bot || !msg) {
+				console.log('Не найден бот или сообщение')
+				return
+			}
+
+			await BotResponseService.getInfo(bot, msg)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	// async profile(bot: TelegramApi, msg: Message) {
+	// 	try {
+	// 		if (!bot || !msg) {
+	// 			console.log('Не найден бот или сообщение')
+	// 			return
+	// 		}
+
+	// 		await BotResponseService.profile(bot, msg)
+	// 	} catch (e) {
+	// 		console.log(e)
+	// 		await this.error(bot, msg)
+	// 	}
+	// }
 }
 
 export const BotResponseController = new BotResponse()

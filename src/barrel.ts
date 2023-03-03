@@ -1,6 +1,18 @@
-import { config } from 'dotenv'
+import { Commands, InitialBot } from './Config/enums'
 import { BotResponseController } from './Controller/BotResponseController/BotResponseController'
-import { Commands } from './Config/enums'
+import { DataBaseController } from './Controller/DataBaseController/DataBaseController'
+import { keepAlive } from './server'
+import { config } from 'dotenv'
 import TelegramApi from 'node-telegram-bot-api'
+import mongoose from 'mongoose'
 
-export { config, TelegramApi, BotResponseController, Commands }
+export {
+	BotResponseController,
+	DataBaseController,
+	TelegramApi,
+	InitialBot,
+	keepAlive,
+	Commands,
+	mongoose,
+	config,
+}

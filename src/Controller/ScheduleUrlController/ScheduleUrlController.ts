@@ -1,7 +1,7 @@
 import { ScheduleUrlService } from '.'
 
 class ScheduleUrl {
-	async getUrl(): Promise<string | undefined> {
+	async getUrl() {
 		try {
 			const res = await ScheduleUrlService.getUrl()
 

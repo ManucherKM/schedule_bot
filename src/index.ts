@@ -1,11 +1,11 @@
 import {
 	BotResponseController,
-	DataBaseController,
-	TelegramApi,
 	Commands,
-	mongoose,
 	config,
-	IUser,
+	DataBaseController,
+	InitialBot,
+	mongoose,
+	TelegramApi,
 } from './barrel'
 
 config()
@@ -35,24 +35,23 @@ const DB_URL = process.env.DB_URL
 
 	const bot = new TelegramApi(TOKEN, params)
 
-	await DataBaseController.
+	const DBBot = await DataBaseController.createBot(InitialBot.nameBot)
+
+	if (!DBBot) {
+		console.log('Не удалось записать бота в БД')
+		return
+	}
 
 	const incomingMessages = {
 		start: new RegExp(`${Commands.start}`),
 		getSchedule: new RegExp(`${Commands.getSchedule}`),
+		getStatistics: new RegExp(`${Commands.getStatistics}`),
+		getInfo: new RegExp(`${Commands.getInfo}`),
 		home: new RegExp(`${Commands.home}`),
 	}
 
 	// Start
 	bot.onText(incomingMessages.start, async msg => {
-		const user = {
-			chat_id: msg.chat.id,
-			tg_id: msg.chat.username,
-			name: msg.chat.first_name,
-		} as IUser
-
-		await DataBaseController.createUser(user)
-
 		await BotResponseController.start(bot, msg)
 	})
 
@@ -61,8 +60,38 @@ const DB_URL = process.env.DB_URL
 		await BotResponseController.getSchedule(bot, msg)
 	})
 
+	// Info
+	bot.onText(incomingMessages.getInfo, async msg => {
+		await BotResponseController.getInfo(bot, msg)
+	})
+
+	// Statistics
+	bot.onText(incomingMessages.getStatistics, async msg => {
+		const chatId = msg.chat.id
+
+		if (chatId !== InitialBot.admin) return
+
+		await BotResponseController.getStatistics(bot, msg)
+	})
+
 	// Home
 	bot.onText(incomingMessages.home, async msg => {
 		await BotResponseController.home(bot, msg)
+	})
+
+	// Other
+	bot.on('message', async msg => {
+		const text = msg.text
+
+		const isOther =
+			!text?.match(incomingMessages.getInfo) &&
+			!text?.match(incomingMessages.getSchedule) &&
+			!text?.match(incomingMessages.getStatistics) &&
+			!text?.match(incomingMessages.home) &&
+			!text?.match(incomingMessages.start)
+
+		if (isOther) {
+			await BotResponseController.notFound(bot, msg)
+		}
 	})
 })()

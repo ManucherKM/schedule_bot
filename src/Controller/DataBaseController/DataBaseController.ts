@@ -20,24 +20,19 @@ class DataBase {
 			console.log(e)
 		}
 	}
-	async incrementToUse() {
+
+	async incrementToUse(nameBot: string, userId: number) {
 		try {
-		} catch (e) {
-			console.log(e)
-		}
-	}
-	async getQuantityUsage() {
-		try {
-		} catch (e) {
-			console.log(e)
-		}
-	}
-	async getNumUsers(): Promise<number | undefined> {
-		try {
-			const res: number = await DataBaseService.getNumUsers()
+			if (!nameBot || !userId) {
+				console.log('Не удалось найти имя бота или идентификатор пользователя')
+				return
+			}
+
+			const res = await DataBaseService.incrementToUse(nameBot, userId)
 
 			if (!res) {
-				return 0
+				console.log('Не удалось инкрементировать количество использований бота')
+				return
 			}
 
 			return res
@@ -45,9 +40,43 @@ class DataBase {
 			console.log(e)
 		}
 	}
-	async createBot() {
+
+	async getQuantityUsage() {
 		try {
-			const res = await DataBaseService.createBot()
+			const res = await DataBaseService.getQuantityUsage()
+
+			if (!res) {
+				return
+			}
+
+			return res
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async getNumUsers() {
+		try {
+			const res = await DataBaseService.getNumUsers()
+
+			if (!res) {
+				return
+			}
+
+			return res
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
+	async createBot(nameBot: string) {
+		try {
+			if (!nameBot) {
+				console.log('Не удалось найти имя бота')
+				return
+			}
+
+			const res = await DataBaseService.createBot(nameBot)
 
 			if (!res) {
 				return

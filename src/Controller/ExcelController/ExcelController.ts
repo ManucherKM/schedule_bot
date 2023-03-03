@@ -1,11 +1,7 @@
-import { CellValue, ExcelService } from './index'
+import { CellValue, ExcelService } from '.'
 
 class Excel {
-	async getColumn(
-		path: string | undefined,
-		course: string | undefined,
-		columnId: string | undefined
-	): Promise<CellValue[]> {
+	async getColumn(path: string, course: string, columnId: string) {
 		try {
 			if (!course || !columnId || !path) {
 				console.log('Некорректные входные данные')
@@ -21,7 +17,7 @@ class Excel {
 		}
 	}
 
-	async getExcel(url: string | undefined): Promise<string | false> {
+	async getExcel(url: string | undefined) {
 		try {
 			if (!url) {
 				console.log('Не указан URL к файлу')
@@ -41,28 +37,7 @@ class Excel {
 		}
 	}
 
-	async removeExcel(pathToExcel: string | undefined): Promise<boolean> {
-		try {
-			if (!pathToExcel) {
-				console.log('Не удалось найти путь к удаляемому файлу')
-				return false
-			}
-
-			const res = await ExcelService.removeExcel(pathToExcel)
-
-			if (!res) {
-				console.log('Не удалось удалить файл с расписанием')
-				return false
-			}
-
-			return res
-		} catch (e) {
-			console.log(e)
-			return false
-		}
-	}
-
-	getPathToSchedule(): string | false {
+	getPathToSchedule() {
 		const res: string = ExcelService.getPathToSchedule()
 
 		if (!res) {

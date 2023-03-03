@@ -1,4 +1,4 @@
-import { EDays, IDay, IColumnHelper } from '.'
+import { EDays, IColumnHelper, IDay } from '.'
 
 export function ColumnHelper<T>(column: T[]): IColumnHelper<T> {
 	const group = column[5]

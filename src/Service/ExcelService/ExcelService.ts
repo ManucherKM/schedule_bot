@@ -1,4 +1,4 @@
-import { ExcelJS, axios, fs, path } from './index'
+import { ExcelJS, axios, fs, path } from '.'
 
 class Excel {
 	private nameToScheduleFile: string = 'Schedule.xlsx'
@@ -50,7 +50,7 @@ class Excel {
 			'..',
 			'..',
 			'Files',
-			this.nameToScheduleFile
+			this.nameToScheduleFile,
 		)
 
 		this.pathToScheduleFile = excelPath
@@ -58,16 +58,6 @@ class Excel {
 		await fs.writeFileSync(excelPath, data)
 
 		return excelPath
-	}
-
-	async removeExcel(pathToExcel: string) {
-		fs.unlink(pathToExcel, e => {
-			if (e) {
-				throw new Error('Не удалось удалить файл с расписанием')
-			}
-		})
-
-		return true
 	}
 
 	getPathToSchedule(): string {

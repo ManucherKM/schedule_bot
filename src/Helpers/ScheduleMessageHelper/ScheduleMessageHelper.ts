@@ -1,4 +1,4 @@
-import { IColumnHelper, CellValue } from './index'
+import { CellValue, IColumnHelper } from '.'
 
 export function ScheduleMessageHelper(days: IColumnHelper<CellValue>): string {
 	let message = ''
@@ -7,7 +7,7 @@ export function ScheduleMessageHelper(days: IColumnHelper<CellValue>): string {
 		let day = `\n\n<b>${dayInfo.name}</b>`
 
 		if (dayInfo.schedule.length === 0) {
-			day += '\nНа этот день пар нет.'
+			day += '\nВ этот день пар нет.'
 			message += day
 
 			continue

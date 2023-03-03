@@ -9,7 +9,7 @@ enum EDays {
 }
 
 //Типы
-import { IDay, IColumnHelper } from '../../Types/types'
+import { IColumnHelper, IDay } from '../../Types/types'
 
 // Экспорт
 export { EDays, IDay, IColumnHelper }
